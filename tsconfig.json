@@ -12,6 +12,10 @@
     "typeRoots": [
       "node_modules/@types"
     ],
+    "types": [
+      "mocha",
+      "jest"
+    ],
     "lib": [
       "es2018",
       "dom"
