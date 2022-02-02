@@ -18,7 +18,6 @@ describe( 'HeroesComponent (deep tests)', () => {
     ];
 
     mockHeroService = jasmine.createSpyObj( [ 'getHeroes', 'addHero', 'deleteHero' ] );
-    mockHeroService.getHeroes.and.returnValue(of(HEROES));
 
     TestBed.configureTestingModule( {
       declarations: [
@@ -31,10 +30,13 @@ describe( 'HeroesComponent (deep tests)', () => {
           useValue: mockHeroService
         }
       ]
-    } )
+    } );
+    fixture = TestBed.createComponent(HeroesComponent);
   } );
 
-  it( 'should be true', function () {
+  it( 'should render each hero as a HeroComponent', function () {
+    mockHeroService.getHeroes.and.returnValue(of(HEROES));
+    fixture.detectChanges();
     expect( true ).toBe( true );
   } );
 } )
