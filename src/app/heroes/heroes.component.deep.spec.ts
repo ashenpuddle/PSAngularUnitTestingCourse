@@ -1,5 +1,5 @@
-import { NO_ERRORS_SCHEMA }          from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By }                        from '@angular/platform-browser';
 import { of }                        from 'rxjs';
 import { HeroService }               from '../hero.service';
 import { HeroComponent }             from '../hero/hero.component';
@@ -31,12 +31,18 @@ describe( 'HeroesComponent (deep tests)', () => {
         }
       ]
     } );
-    fixture = TestBed.createComponent(HeroesComponent);
+    fixture = TestBed.createComponent( HeroesComponent );
   } );
 
   it( 'should render each hero as a HeroComponent', function () {
-    mockHeroService.getHeroes.and.returnValue(of(HEROES));
+    mockHeroService.getHeroes.and.returnValue( of( HEROES ) );
     fixture.detectChanges();
-    expect( true ).toBe( true );
+
+    let heroComponentDEs = fixture.debugElement.queryAll( By.directive( HeroComponent ) );
+    expect( heroComponentDEs.length ).toEqual( 3 );
+
+    for ( let i = 0; i < heroComponentDEs.length; i++ ) {
+      expect( heroComponentDEs[ i ].componentInstance.hero ).toEqual( HEROES[ i ] );
+    }
   } );
 } )
